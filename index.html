@@ -1,489 +1,160 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RBXSTORE.ID - Toko Game Digital Premium</title>
-  
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Link Ke File CSS Eksternal -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBXSTORE.ID - Toko Robux & Item Game</title>
+    <!-- CSS Utama -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome / Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS SDK (Untuk pengiriman laporan ke callvinlionel50@gmail.com) -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 
-  <!-- ==================== INTRO ANIMATION ==================== -->
-  <div id="intro-screen" class="intro-screen">
-    <div id="intro-text" class="intro-text">
-      <span class="orange-text">RBXSTORE</span><span class="black-text">.ID</span>
-    </div>
-  </div>
-
-  <!-- ==================== HEADER & NAVBAR ==================== -->
-  <header class="navbar">
-    <div class="nav-container">
-      <div class="brand-logo" onclick="showPage('store')">
-        <span class="gold-text">RBXSTORE</span><span class="id-text">.ID</span>
-      </div>
-      
-      <div class="nav-actions">
-        <button class="cart-btn-icon" id="cart-icon-btn" onclick="toggleCartModal()" aria-label="Keranjang">
-          <i class="fa-solid fa-cart-shopping"></i>
-          <span class="cart-badge" id="cart-count">0</span>
-        </button>
-        <button class="hamburger-btn" id="menu-toggle-btn" onclick="toggleSidebar()" aria-label="Menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- ==================== SIDEBAR / DRAWER ==================== -->
-  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <span class="sidebar-title" data-i18n="menu">MENU</span>
-      <button class="close-btn" onclick="toggleSidebar()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <ul class="sidebar-menu">
-      <li onclick="navigateTo('store')">
-        <i class="fa-solid fa-store"></i> <span data-i18n="nav_store">Toko Utama</span>
-      </li>
-      <li onclick="navigateTo('about')">
-        <i class="fa-solid fa-circle-info"></i> <span data-i18n="about_title">Tentang Kami</span>
-      </li>
-      <li onclick="navigateTo('report')">
-        <i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="report_title">Laporkan Masalah</span>
-      </li>
-      <li onclick="shareStore()">
-        <i class="fa-solid fa-share-nodes"></i> <span data-i18n="share_store">Bagikan Toko</span>
-      </li>
-    </ul>
-
-    <div class="sidebar-divider"></div>
-
-    <div class="sidebar-setting">
-      <div class="setting-label">
-        <i class="fa-solid fa-moon"></i> <span data-i18n="night_mode">Night Mode</span>
-      </div>
-      <label class="switch">
-        <input type="checkbox" id="night-mode-toggle" onchange="toggleNightMode()">
-        <span class="slider round"></span>
-      </label>
+    <!-- 1. INTRO RBXSTORE.ID -->
+    <div id="intro-screen">
+        <div class="intro-content">
+            <h1 class="intro-title">RBXSTORE.ID</h1>
+            <p class="intro-sub">Toko Robux Termurah & Terpercaya</p>
+        </div>
     </div>
 
-    <div class="sidebar-setting">
-      <div class="setting-label">
-        <i class="fa-solid fa-globe"></i> <span data-i18n="language">Bahasa</span>
-      </div>
-      <select id="lang-select" onchange="changeLanguage(this.value)">
-        <option value="id">Indonesia (Original)</option>
-        <option value="en">English</option>
-        <option value="ph">Filipino</option>
-        <option value="zh">Mandarin</option>
-        <option value="es">Español</option>
-      </select>
-    </div>
-  </aside>
-
-  <!-- ==================== PROMO MODAL ==================== -->
-  <div class="modal-overlay" id="promo-modal">
-    <div class="modal-card promo-card">
-      <button class="modal-close-x" onclick="closePromoModal()"><i class="fa-solid fa-xmark"></i></button>
-      <div class="promo-badge" data-i18n="promo_badge">PROMO</div>
-      <h2 class="promo-title" data-i18n="promo_title">Diskon 5% Khusus Hari Ini!</h2>
-      <p class="promo-desc" data-i18n="promo_desc">Diskon 5% untuk pembelian di atas Rp 30.000!</p>
-      <button class="btn btn-primary btn-block" onclick="closePromoModal()" data-i18n="btn_continue">Lanjutkan ke Toko</button>
-    </div>
-  </div>
-
-  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
-  <main class="main-container">
-
-    <!-- PAGE 1: TOKO UTAMA -->
-    <section id="page-store" class="page-section active">
-      <!-- BANNER / HERO -->
-      <div class="hero-banner">
-        <div class="hero-content">
-          <span class="hero-tag"><i class="fa-solid fa-bolt"></i> Official Game Store</span>
-          <h1>RBXSTORE.ID</h1>
-          <p data-i18n="hero_sub">Top Up Game Digital Cepat, Murah & Terpercaya</p>
-        </div>
-      </div>
-
-      <!-- KATALOG FOLDER / KATEGORI -->
-      <div class="section-title">
-        <h2 data-i18n="catalog_title"><i class="fa-solid fa-folder-open"></i> Kategori Produk</h2>
-      </div>
-
-      <div class="categories-grid">
-
-        <!-- Folder 1: Robux - Roblox -->
-        <div class="folder-card" onclick="openCategoryModal('robux')">
-          <div class="folder-icon"><i class="fa-solid fa-cube"></i></div>
-          <div class="folder-info">
-            <h3>Robux - Roblox</h3>
-            <p>50 - 10.000 Robux</p>
-          </div>
-          <i class="fa-solid fa-chevron-right folder-arrow"></i>
-        </div>
-
-        <!-- Folder 2: Steal An Egg - Roblox -->
-        <div class="folder-card" onclick="openCategoryModal('stealanegg')">
-          <div class="folder-icon"><i class="fa-solid fa-egg"></i></div>
-          <div class="folder-info">
-            <h3>Steal An Egg - Roblox</h3>
-            <p>Gamepass & Joki Speed</p>
-          </div>
-          <i class="fa-solid fa-chevron-right folder-arrow"></i>
-        </div>
-
-        <!-- Folder 3: Toilet Tower Defense - Roblox -->
-        <div class="folder-card" onclick="openCategoryModal('ttd')">
-          <div class="folder-icon"><i class="fa-solid fa-shield-halved"></i></div>
-          <div class="folder-info">
-            <h3>Toilet Tower Defense - Roblox</h3>
-            <p>10.000 - 1.000.000 Gems</p>
-          </div>
-          <i class="fa-solid fa-chevron-right folder-arrow"></i>
-        </div>
-
-        <!-- Folder 4: Mobile Legends -->
-        <div class="folder-card" onclick="openCategoryModal('mlbb')">
-          <div class="folder-icon"><i class="fa-solid fa-gamepad"></i></div>
-          <div class="folder-info">
-            <h3>Mobile Legends</h3>
-            <p>Diamonds & Custom</p>
-          </div>
-          <i class="fa-solid fa-chevron-right folder-arrow"></i>
-        </div>
-
-        <!-- Folder 5: 99 Night In The Forest - Roblox -->
-        <div class="folder-card" onclick="openCategoryModal('nightforest')">
-          <div class="folder-icon"><i class="fa-solid fa-tree"></i></div>
-          <div class="folder-info">
-            <h3>99 Night In The Forest - Roblox</h3>
-            <p>20 - 700 Diamonds</p>
-          </div>
-          <i class="fa-solid fa-chevron-right folder-arrow"></i>
-        </div>
-
-        <!-- Folder 6: Free Fire -->
-        <div class="folder-card" onclick="openCategoryModal('freefire')">
-          <div class="folder-icon"><i class="fa-solid fa-fire"></i></div>
-          <div class="folder-info">
-            <h3>Free Fire</h3>
-            <p>70 - 10.000 Diamonds</p>
-          </div>
-          <i class="fa-solid fa-chevron-right folder-arrow"></i>
-        </div>
-
-      </div>
-
-      <!-- SECTION CUSTOM PEMBELIAN BANNER -->
-      <div class="custom-purchase-banner" onclick="showPage('custom')">
-        <div class="custom-banner-content">
-          <i class="fa-solid fa-boxes-packing custom-icon"></i>
-          <div>
-            <h3 data-i18n="custom_not_found">Tidak menemukan produk yang kamu cari?</h3>
-            <p data-i18n="custom_banner_desc">Kamu dapat mengajukan pembelian item atau kebutuhan game online lainnya melalui RBXSTORE.ID. Hubungi kami untuk mengecek ketersediaan produk dan harga.</p>
-          </div>
-        </div>
-        <button class="btn btn-secondary" data-i18n="btn_custom_order">Ajukan Custom Order</button>
-      </div>
-    </section>
-
-    <!-- PAGE 2: CUSTOM PEMBELIAN -->
-    <section id="page-custom" class="page-section">
-      <button class="btn-back" onclick="showPage('store')">
-        <i class="fa-solid fa-arrow-left"></i> <span data-i18n="btn_back">Kembali ke Toko</span>
-      </button>
-
-      <div class="card-box">
-        <div class="card-header">
-          <span class="card-subtitle" data-i18n="custom_subtitle">PESANAN KHUSUS</span>
-          <h2 data-i18n="custom_title">Custom Pembelian</h2>
-          <p data-i18n="custom_desc">Pilih game dan masukkan produk atau item yang ingin dibeli. Ketersediaan dan harga akan dikonfirmasi melalui WhatsApp.</p>
-        </div>
-
-        <form id="custom-form" onsubmit="handleCustomOrder(event)">
-          <div class="form-group">
-            <label data-i18n="label_select_game">Pilih Game</label>
-            <select id="custom-game-select" class="form-control" onchange="toggleCustomOtherInput()" required>
-              <option value="" disabled selected>-- Pilih Game --</option>
-              <option value="Murder Mystery 2">Murder Mystery 2</option>
-              <option value="Brookhaven">Brookhaven</option>
-              <option value="Car Driving Indonesia">Car Driving Indonesia</option>
-              <option value="Blox Fruit">Blox Fruit</option>
-              <option value="Steal A Brainrot">Steal A Brainrot</option>
-              <option value="Keyboard Escape">Keyboard Escape</option>
-              <option value="Grow A Garden 2">Grow A Garden 2</option>
-              <option value="Ride A Pet">Ride A Pet</option>
-              <option value="FC Mobile">FC Mobile</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div class="form-group hidden" id="custom-other-game-group">
-            <label data-i18n="label_game_name">Nama Game:</label>
-            <input type="text" id="custom-other-game" class="form-control" placeholder="Masukkan nama game">
-          </div>
-
-          <div class="form-group">
-            <label data-i18n="label_order_name">Nama Pesanan:</label>
-            <input type="text" id="custom-item-name" class="form-control" placeholder="Contoh: 1x Dragon Fruit / Pass khusus" required>
-          </div>
-
-          <button type="submit" class="btn btn-wa btn-block">
-            <i class="fa-brands fa-whatsapp"></i> <span data-i18n="btn_buy_wa">Beli langsung via WhatsApp</span>
-          </button>
-        </form>
-      </div>
-    </section>
-
-    <!-- PAGE 3: TENTANG KAMI -->
-    <section id="page-about" class="page-section">
-      <button class="btn-back" onclick="showPage('store')">
-        <i class="fa-solid fa-arrow-left"></i> <span data-i18n="btn_back">Kembali ke Toko</span>
-      </button>
-
-      <div class="card-box story-card">
-        <span class="card-subtitle" data-i18n="story_subtitle">CERITA KAMI</span>
-        <h2 data-i18n="story_title">Kisah di Balik RBXSTORE.ID</h2>
-
-        <div class="story-content">
-          <p data-i18n="story_p1">
-            RBXSTORE.ID dimulai pada 30 Juli 2025 dari sebuah ide sederhana yang muncul saat pendirinya sedang berada di sekolah. Ide kecil untuk menjual produk game online kemudian berkembang menjadi sesuatu yang lebih serius.
-          </p>
-          <p data-i18n="story_p2">
-            Pada awalnya, RBXSTORE.ID belum memiliki website atau toko digital. Menu produk pertama dibuat menggunakan kertas ketika toko masih dalam tahap pengembangan.
-          </p>
-          <p data-i18n="story_p3">
-            Seiring berkembangnya ide tersebut, seorang teman bernama Jesslyn membantu membuat menu produk yang lebih baik menggunakan Canva.
-          </p>
-          <p data-i18n="story_p4">
-            Seiring waktu, RBXSTORE.ID terus mengembangkan katalog, menghadirkan promosi dan diskon, serta menambah pilihan produk game untuk pelanggan.
-          </p>
-          <p data-i18n="story_p5">
-            Pada Juli 2026, RBXSTORE.ID mencapai tahap baru ketika pendirinya mulai mengembangkan website sendiri. Proyek ini berkembang dari menu berbasis kertas menjadi toko digital yang dibuat menggunakan HTML, CSS, JavaScript, GitHub, dan GitHub Pages.
-          </p>
-          <p data-i18n="story_p6">
-            Saat ini, RBXSTORE.ID terus beroperasi dan berkembang dengan tujuan memberikan cara yang sederhana dan nyaman bagi pelanggan untuk membeli produk game digital.
-          </p>
-          <div class="story-footer">
-            <strong data-i18n="story_founded">Didirikan 30 Juli 2025.</strong>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PAGE 4: LAPORKAN MASALAH -->
-    <section id="page-report" class="page-section">
-      <button class="btn-back" onclick="showPage('store')">
-        <i class="fa-solid fa-arrow-left"></i> <span data-i18n="btn_back">Kembali ke Toko</span>
-      </button>
-
-      <div class="card-box">
-        <div class="card-header">
-          <span class="card-subtitle" data-i18n="support_subtitle">DUKUNGAN PELANGGAN</span>
-          <h2 data-i18n="report_title">Laporkan Masalah</h2>
-          <p data-i18n="report_desc">Mengalami masalah dengan RBXSTORE.ID? Kirim laporan di bawah ini dan berikan informasi yang cukup agar kami dapat memahami masalah kamu.</p>
-        </div>
-
-        <form id="report-form" onsubmit="handleReportSubmit(event)">
-          <div class="form-group">
-            <label data-i18n="label_name">Nama</label>
-            <input type="text" id="report-name" class="form-control" placeholder="Masukkan nama kamu" required>
-          </div>
-
-          <div class="form-group">
-            <label data-i18n="label_category">Kategori Masalah</label>
-            <select id="report-category" class="form-control" required>
-              <option value="Order Issue">Order Issue</option>
-              <option value="Product Issue">Product Issue</option>
-              <option value="Website Issue">Website Issue</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label data-i18n="label_explain">Jelaskan masalah</label>
-            <textarea id="report-detail" class="form-control" rows="5" placeholder="Tuliskan masalah kamu secara detail..." required></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block">
-            <i class="fa-solid fa-paper-plane"></i> <span data-i18n="btn_send_report">Kirim Laporan</span>
-          </button>
-        </form>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ==================== CATEGORY MODAL (POPUP DAFTAR PRODUK) ==================== -->
-  <div class="modal-overlay" id="category-modal">
-    <div class="modal-card category-popup-card">
-      <div class="category-modal-header">
-        <h3 id="cat-modal-title">Nama Kategori</h3>
-        <button class="modal-close-x" onclick="closeCategoryModal()"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-
-      <div class="category-products-list" id="cat-modal-body">
-        <!-- Produk di-inject via JavaScript -->
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== CUSTOM PRODUCT MODALS ==================== -->
-  
-  <!-- Modal Custom Robux -->
-  <div class="modal-overlay" id="custom-robux-modal">
-    <div class="modal-card">
-      <div class="category-modal-header">
-        <h3>KOSTUM ROBUX</h3>
-        <button class="modal-close-x" onclick="closeModal('custom-robux-modal')"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body-content">
-        <p class="input-instruction" data-i18n="custom_robux_inst">Masukkan jumlah Robux yang diinginkan. Maksimal 10.000 Robux.</p>
-        <div class="form-group">
-          <input type="number" id="input-custom-robux" class="form-control" placeholder="Contoh: 100" min="1" max="10000" oninput="validateDigits(this, 10000)">
-          <small class="text-muted" data-i18n="max_robux">Maksimal: 10.000 Robux</small>
-        </div>
-        <div class="action-buttons-stack">
-          <button class="btn btn-secondary btn-block" onclick="addCustomRobuxToCart()"><i class="fa-solid fa-cart-plus"></i> <span data-i18n="btn_add_cart">Tambah ke Keranjang</span></button>
-          <button class="btn btn-wa btn-block" onclick="buyCustomRobuxWA()"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="btn_buy_wa">Beli via WhatsApp</span></button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Custom MLBB -->
-  <div class="modal-overlay" id="custom-mlbb-modal">
-    <div class="modal-card">
-      <div class="category-modal-header">
-        <h3>KOSTUM DIAMONDS</h3>
-        <button class="modal-close-x" onclick="closeModal('custom-mlbb-modal')"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body-content">
-        <p class="input-instruction" data-i18n="custom_mlbb_inst">Masukkan jumlah Diamonds yang diinginkan. Maksimal 10.000 Diamonds.</p>
-        <div class="form-group">
-          <input type="number" id="input-custom-mlbb" class="form-control" placeholder="Contoh: 100" min="1" max="10000" oninput="validateDigits(this, 10000)">
-          <small class="text-muted" data-i18n="max_diamonds">Maksimal: 10.000 Diamonds</small>
-          <div class="price-info-tag" data-i18n="price_waiting">Harga: Menunggu informasi</div>
-        </div>
-        <div class="action-buttons-stack">
-          <button class="btn btn-secondary btn-block" onclick="addCustomMlbbToCart()"><i class="fa-solid fa-cart-plus"></i> <span data-i18n="btn_add_cart">Tambah ke Keranjang</span></button>
-          <button class="btn btn-wa btn-block" onclick="buyCustomMlbbWA()"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="btn_buy_wa">Beli via WhatsApp</span></button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Custom Free Fire -->
-  <div class="modal-overlay" id="custom-ff-modal">
-    <div class="modal-card">
-      <div class="category-modal-header">
-        <h3>KOSTUM DIAMONDS FREE FIRE</h3>
-        <button class="modal-close-x" onclick="closeModal('custom-ff-modal')"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body-content">
-        <p class="input-instruction" data-i18n="custom_ff_inst">Masukkan jumlah Diamonds yang diinginkan. Maksimal 10.000 Diamonds.</p>
-        <div class="form-group">
-          <input type="number" id="input-custom-ff" class="form-control" placeholder="Contoh: 100" min="1" max="10000" oninput="validateDigits(this, 10000)">
-          <small class="text-muted" data-i18n="max_diamonds">Maksimal: 10.000 Diamonds</small>
-        </div>
-        <div class="action-buttons-stack">
-          <button class="btn btn-secondary btn-block" onclick="addCustomFFToCart()"><i class="fa-solid fa-cart-plus"></i> <span data-i18n="btn_add_cart">Tambah ke Keranjang</span></button>
-          <button class="btn btn-wa btn-block" onclick="buyCustomFFWA()"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="btn_buy_wa">Beli via WhatsApp</span></button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Joki Speed Steal An Egg -->
-  <div class="modal-overlay" id="joki-sae-modal">
-    <div class="modal-card">
-      <div class="category-modal-header">
-        <h3>Joki Speed Steal An Egg</h3>
-        <button class="modal-close-x" onclick="closeModal('joki-sae-modal')"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="modal-body-content align-center">
-        <p class="counter-label" data-i18n="joki_ask_hours">Mau joki berapa jam?</p>
+    <!-- MAIN APP CONTENT -->
+    <div id="main-content">
         
-        <div class="counter-control">
-          <button class="counter-btn" onclick="updateJokiHours(-1)">−</button>
-          <span class="counter-value" id="joki-hours-display">1</span>
-          <button class="counter-btn" onclick="updateJokiHours(1)">+</button>
-        </div>
+        <!-- NAVBAR -->
+        <header class="navbar">
+            <div class="logo">RBXSTORE.ID</div>
+            <div class="cart-icon" id="open-cart-btn">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </header>
 
-        <div class="joki-price-display">
-          <span data-i18n="total_price">Total Harga:</span> <strong id="joki-price-display">Rp 200</strong>
-        </div>
+        <!-- 2. BANNER PROMO AESTHETIC BLUR -->
+        <section class="promo-container">
+            <div class="promo-card-blur">
+                <span class="promo-badge">PROMO SPESIAL</span>
+                <h2>Diskon Otomatis 5%!</h2>
+                <p>Minimal pembelanjaan <strong>di atas Rp 30.000,-</strong> langsung dapat diskon otomatis. Klaim kode voucher tambahan untuk diskon hingga <strong>10%</strong>!</p>
+            </div>
+        </section>
 
-        <div class="action-buttons-stack mt-20">
-          <button class="btn btn-secondary btn-block" onclick="addJokiToCart()"><i class="fa-solid fa-cart-plus"></i> <span data-i18n="btn_add_cart">Tambah ke Keranjang</span></button>
-          <button class="btn btn-wa btn-block" onclick="buyJokiWA()"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="btn_buy_wa">Beli via WhatsApp</span></button>
-        </div>
-      </div>
+        <!-- KATALOG PRODUK -->
+        <main class="products-section">
+            <h2>Katalog Robux</h2>
+            <div class="product-grid">
+                
+                <!-- Sample Produk 1 -->
+                <div class="product-card" data-id="1" data-name="Robux 80" data-price="15000">
+                    <h3>Robux 80</h3>
+                    <p class="price">Rp 15.000,-</p>
+                    <div class="card-buttons">
+                        <!-- Tombol WA langsung akan diarahkan ke Cart -->
+                        <button class="btn-wa trigger-cart-redirect"><i class="fa-brands fa-whatsapp"></i> Beli via WA</button>
+                        <button class="btn-cart add-to-cart-btn"><i class="fa-solid fa-cart-plus"></i> Cart</button>
+                    </div>
+                </div>
+
+                <!-- Sample Produk 2 -->
+                <div class="product-card" data-id="2" data-name="Robux 400" data-price="50000">
+                    <h3>Robux 400</h3>
+                    <p class="price">Rp 50.000,-</p>
+                    <div class="card-buttons">
+                        <button class="btn-wa trigger-cart-redirect"><i class="fa-brands fa-whatsapp"></i> Beli via WA</button>
+                        <button class="btn-cart add-to-cart-btn"><i class="fa-solid fa-cart-plus"></i> Cart</button>
+                    </div>
+                </div>
+
+                <!-- Sample Produk 3 -->
+                <div class="product-card" data-id="3" data-name="Robux 800" data-price="100000">
+                    <h3>Robux 800</h3>
+                    <p class="price">Rp 100.000,-</p>
+                    <div class="card-buttons">
+                        <button class="btn-wa trigger-cart-redirect"><i class="fa-brands fa-whatsapp"></i> Beli via WA</button>
+                        <button class="btn-cart add-to-cart-btn"><i class="fa-solid fa-cart-plus"></i> Cart</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- FORM LAPORAN EMAIL -->
+        <section class="report-section">
+            <div class="report-card">
+                <h3><i class="fa-solid fa-envelope-open-text"></i> Kirim Laporan / Masukan</h3>
+                <form id="report-form">
+                    <input type="text" id="report-name" placeholder="Nama Anda" required>
+                    <input type="email" id="report-email" placeholder="Email Anda" required>
+                    <textarea id="report-message" placeholder="Tuliskan laporan atau kendala transaksi..." rows="4" required></textarea>
+                    <!-- Email Tujuan Laporan -->
+                    <input type="hidden" id="report-destination" value="callvinlionel50@gmail.com">
+                    <button type="submit" class="btn-submit-report">Kirim Laporan</button>
+                </form>
+                <p id="report-status"></p>
+            </div>
+        </section>
+
     </div>
-  </div>
 
-  <!-- ==================== SHOPPING CART MODAL ==================== -->
-  <div class="modal-overlay" id="cart-modal">
-    <div class="modal-card cart-modal-card">
-      <div class="category-modal-header">
-        <h3><i class="fa-solid fa-cart-shopping"></i> <span data-i18n="cart_title">Keranjang Belanja</span></h3>
-        <button class="modal-close-x" onclick="toggleCartModal()"><i class="fa-solid fa-xmark"></i></button>
-      </div>
+    <!-- MODAL CHECKOUT (STEP 2 INFORMASI PRODUK, VOUCHER, & PEMBAYARAN) -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <h2>Konfirmasi Pesanan (Step 2)</h2>
+            
+            <!-- INFORMASI PRODUK -->
+            <div class="checkout-summary">
+                <p><strong>Nama Pesanan :</strong> <span id="summary-name">-</span></p>
+                <p><strong>Jumlah :</strong> <span id="summary-qty">1</span></p>
+                <p><strong>Harga :</strong> <span id="summary-price">Rp 0,-</span></p>
+                <p><strong>Diskon :</strong> <span id="summary-discount">0%</span> <small id="discount-note"></small></p>
+                <hr>
+                <p class="total-text"><strong>Total :</strong> <span id="summary-total">Rp 0,-</span></p>
+            </div>
 
-      <div class="cart-items-container" id="cart-items-list">
-        <!-- Item Keranjang di-render via JavaScript -->
-      </div>
+            <!-- BOX VOUCHER -->
+            <div class="voucher-section">
+                <label for="voucher-code">Punya Kode Promo?</label>
+                <div class="voucher-box">
+                    <input type="text" id="voucher-code" placeholder="Isi kode voucher untuk diskon 5%" uppercase>
+                    <button id="claim-voucher-btn">Claim</button>
+                </div>
+                <small class="voucher-info">*Berlaku 1 OKTOBER 2026 - 31 OKTOBER 2026. Wajib Huruf Kapital (CAPS).</small>
+                <p id="voucher-status-msg"></p>
+            </div>
 
-      <div class="cart-summary">
-        <div class="summary-row">
-          <span data-i18n="subtotal">Subtotal</span>
-          <span id="cart-subtotal">Rp 0</span>
+            <!-- METODE PEMBAYARAN -->
+            <div class="payment-section">
+                <h3>Pilih Metode Pembayaran</h3>
+                <div class="payment-options">
+                    <label class="payment-card">
+                        <input type="radio" name="payment_method" value="CASH" checked>
+                        <span>CASH</span>
+                    </label>
+                    <label class="payment-card">
+                        <input type="radio" name="payment_method" value="GOPAY">
+                        <span>GOPAY</span>
+                    </label>
+                    <label class="payment-card">
+                        <input type="radio" name="payment_method" value="BANK VIRTUAL ACCOUNT (BCA,BNI,BRI)">
+                        <span>BANK VA (BCA, BNI, BRI)</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- TOMBOL LANJUT KE WA -->
+            <button id="proceed-to-wa-btn" class="btn-proceed-wa">
+                <i class="fa-brands fa-whatsapp"></i> Lanjut Pesan via WhatsApp
+            </button>
+
         </div>
-        <div class="summary-row discount-row hidden" id="cart-discount-row">
-          <span><span data-i18n="discount">Diskon</span> (5%)</span>
-          <span id="cart-discount">-Rp 0</span>
-        </div>
-        <div class="summary-row total-row">
-          <span data-i18n="total">Total Akhir</span>
-          <span id="cart-total">Rp 0</span>
-        </div>
-        <p class="discount-note hidden" id="cart-discount-note" data-i18n="discount_applied_note">
-          🎉 Selamat! Kamu mendapatkan diskon 5% untuk pembelian di atas Rp 30.000.
-        </p>
-      </div>
-
-      <div class="cart-actions">
-        <button class="btn btn-wa btn-block" onclick="checkoutCartWA()">
-          <i class="fa-brands fa-whatsapp"></i> <span data-i18n="btn_checkout_wa">Lanjutkan Pembelian via WhatsApp</span>
-        </button>
-      </div>
     </div>
-  </div>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-brand">
-        <span class="gold-text">RBXSTORE</span><span class="id-text">.ID</span>
-      </div>
-      <p data-i18n="footer_tag">Penyedia Layanan & Top Up Game Digital Terpercaya.</p>
-      <div class="footer-copy">&copy; 2025-2026 RBXSTORE.ID. All rights reserved.</div>
-    </div>
-  </footer>
-
-  <!-- Link Ke File JS Eksternal -->
-  <script src="script.js"></script>
+    <!-- JAVASCRIPT UTAMA -->
+    <script src="script.js"></script>
 </body>
 </html>
